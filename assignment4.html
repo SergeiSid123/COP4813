@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Assignment 4 - Compound Interest Calculator</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://unpkg.com/highcharts@13.0.2/highcharts.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Sergei Sidorsky</h1>
+        <p>Information Technology Student</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="assignments.html">Assignments</a>
+    </nav>
+
+    <main>
+
+      <section>
+    <h2>Assignment 4 - Compound Interest Calculator</h2>
+
+    <p>A = P(1 + r)<sup>t</sup></p>
+
+    <label>Starting Amount (P):</label>
+    <input type="number" id="principal" value="1000">
+    <br><br>
+
+    <label>Interest Rate (%):</label>
+    <input type="number" id="rate" value="5">
+    <br><br>
+
+    <label>Start Year:</label>
+    <input type="number" id="startYear" value="0">
+    <br><br>
+
+    <label>End Year:</label>
+    <input type="number" id="endYear" value="20">
+    <br><br>
+
+    <button id="calculateButton">Calculate</button>
+
+    <br><br>
+
+    <div id="results"></div>
+
+    <br><br>
+
+    <div id="chartContainer"></div>
+</section>
+
+    </main>
+
+    <footer>
+        <p>Created by Sergei Sidorsky</p>
+    </footer>
+
+    <script>
+    document.getElementById("calculateButton").addEventListener("click", function() {
+
+        let principal = Number(document.getElementById("principal").value);
+        let rate = Number(document.getElementById("rate").value) / 100;
+        let startYear = Number(document.getElementById("startYear").value);
+        let endYear = Number(document.getElementById("endYear").value);
+
+        let output = "";
+        let chartData = [];
+
+        for (let year = startYear; year <= endYear; year++) {
+            let amount = principal * Math.pow(1 + rate, year);
+
+            chartData.push([year, amount]);
+
+            output += "Year " + year + ": $" + amount.toFixed(2) + "<br>";
+        }
+
+        document.getElementById("results").innerHTML = output;
+
+        Highcharts.chart("chartContainer", {
+            title: {
+                text: "Compound Interest Growth"
+            },
+
+            xAxis: {
+                title: {
+                    text: "Year"
+                }
+            },
+
+            yAxis: {
+                title: {
+                    text: "Balance ($)"
+                }
+            },
+
+            series: [{
+                name: "Account Balance",
+                data: chartData
+            }]
+        });
+
+    });
+</script>
+
+</body>
+
+</html>
